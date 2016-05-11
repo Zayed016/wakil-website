@@ -1,7 +1,7 @@
 <ul>
 <?php
 
-foreach ($list->result() as $row)
+foreach ($list as $row)
 {		$id=$row->id;
 
 	
@@ -11,3 +11,6 @@ foreach ($list->result() as $row)
 <?php   
 }
 ?></ul>
+
+<!-- INSERT INTO `types` (`id`, `name`) VALUES (NULL, 'Generator'), (NULL, 'Sub-station'), (NULL, 'Stabilizer'), (NULL, 'IPS/UPS'), (NULL, 'IVS'), (NULL, 'CCTV'), (NULL, 'Solar system'), (NULL, 'LED light'), (NULL, 'Electrical accessories'); -->
+

@@ -11,17 +11,15 @@ class Home extends CI_Controller {
 	
 	   public function index()
         {			
-        	$this->load->model('Data');
-			
-			$lists['list']=$this->Data->getlist();
+             $lists['list']=$this->Data->getlist();
 
-			$lists['view']='home';
-			$this->load->view('main',$lists);
+			 $lists['view']='home';
+			 $this->load->view('main',$lists);
+			 
         }
 
         public function catagories($pro){
-
-        	$this->load->model('Data');
+        	
         	$get['pro']=$this->Data->mydata($pro);
         	$get['view']='second';
         	$this->load->view('main',$get);
@@ -29,21 +27,28 @@ class Home extends CI_Controller {
 
         public function admin(){
 
-        	$ad['view']='login';
-        	$this->load->view('main',$ad);
-
-        }
-
-        public function valid(){
-
         if($this->session->has_userdata('logged_in')){	
+       	 $send['list']=$this->Data->getlist();
          $send['view']='success';
          $this->load->view('main',$send);
     	 }
          else {
+         	
+        	$ad['view']='login';
+        	$this->load->view('main',$ad);
+        }
 
-         $this->load->model('Data');
-	 	 $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_database');
+        }
+
+       public function valid(){
+
+        if($this->session->has_userdata('logged_in')){	
+
+         redirect('home/admin');
+    	 }
+         else {
+
+         $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_database');
 		 $this->form_validation->set_rules('password', 'Password', 'trim|required');
 		 
 		 if($this->form_validation->run() == FALSE) {
@@ -57,24 +62,54 @@ class Home extends CI_Controller {
 	       'username'  => $this->input->post('username'),
 	       'logged_in' => TRUE    );
 	      	$this->session->set_userdata($ses);
-	      	$send['ses']=$ses;
-		    $send['view']='success';
-        	$this->load->view('main',$send);
+	      	redirect('home/admin','refresh');
 		   }
 		 
 		 }
 		 
 		 }
 		
- 		
- 		function logout(){
+ 		public function edit($id){
+
+ 		if($this->session->has_userdata('logged_in')){	
+         $send['edit']=$this->Data->getrow($id);
+         $tid=$this->Data->whatype($id);
+         foreach ($tid as $key ) {}
+   
+   		 $send['list']=$this->Data->getlist();
+
+ 		 $send['tid']=$this->Data->getype($key->type_id);
+ 		 $send['view']='edit';
+         $this->load->view('main',$send);
+    	 }
+         else {
+         	$this->session->set_flashdata('mes','You have to log in first');
+         	redirect('home/admin');
+ 		 
+     	 }
+ 		}
+
+ 		public function delete($id){
+
+ 			$conf=$this->Data->delrow($id);
+
+ 			if($conf==TRUE) {	
+ 			$this->session->set_flashdata('mes','Data successfully deleted');
+ 			} else{
+ 			$this->session->set_flashdata('mes','Data deletetation unsuccessful');
+ 			}
+
+ 			redirect('home/admin');
+ 		}
+
+ 		public function logout(){
  			$this->session->unset_userdata('username');
  			$this->session->unset_userdata('logged_in');
  			$this->session->sess_destroy();
- 			redirect('home/valid','refresh');
+ 			redirect('home/admin','refresh');
  		}
 
-		 function check_database($username)
+		 public function check_database($username)
 		 {
 		   
 		   $password = $this->input->post('password');

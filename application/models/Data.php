@@ -4,12 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Data extends CI_Model {
 
 
-		public function __construct()
+    	public function __construct()
         {
              parent::__construct();
         }
 
-	  
+      
         public function getlist(){
 
         	$list=$this->db->query("select * from types");
@@ -25,8 +25,29 @@ class Data extends CI_Model {
         }
 
         public function uprow($which){
+            $type=$which['type'];
+            $name=$which['name'];
+            $details=$which['details'];
+            $id=$which['id'];
+            
+           $this->db->query("update products set type_id = '$type', name = '$name', details = '$details' where id='$id'");
+        
+        }
 
-        //	$sql=$this->db->query("UPDATE `products` SET `name` = 'dsfartrtr', `details` = 'asdfdfdasdsfdsfdsfrtrt' WHERE `products`.`id` = '';")
+        public function newrow($which){
+
+            $type=$which['type'];
+            $name=$which['name'];
+            $details=$which['details'];
+            
+            $one=$this->db->query("select * from products");
+            $o=$one->num_rows();
+            $this->db->query("insert into products ( `type_id`, `name`, `details`) VALUES ( '$type', '$name', '$details')");
+            $two=$this->db->query("select * from products");
+            $t=$two->num_rows();
+            if($t>$o) return TRUE;
+            else return FALSE;
+
         }
 
         public function delrow($ok){
@@ -58,22 +79,22 @@ class Data extends CI_Model {
         }
 
         public function login($username, $password)
-		 {
-		   $this ->db-> select('id, username, password');
-		   $this ->db-> from('admin');
-		   $this ->db-> where('username', $username);
-		   $this ->db-> where('password', $password);
-		   $this ->db-> limit(1);
-		 
-		   $query = $this->db-> get();
-		 
-		   if($query -> num_rows() == 1)
-		   {
-		     return $query->result();
-		   }
-		   else return false;
-		   
-		 }
+    	 {
+    	   $this ->db-> select('id, username, password');
+    	   $this ->db-> from('admin');
+    	   $this ->db-> where('username', $username);
+    	   $this ->db-> where('password', $password);
+    	   $this ->db-> limit(1);
+    	 
+    	   $query = $this->db-> get();
+    	 
+    	   if($query -> num_rows() == 1)
+    	   {
+    	     return $query->result();
+    	   }
+    	   else return false;
+    	   
+    	 }
 		
 
 }

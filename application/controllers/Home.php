@@ -24,7 +24,37 @@ class Home extends CI_Controller {
         	$get['view']='second';
         	$this->load->view('main',$get);
         }
-
+       public function tonew(){
+       	 if($this->session->has_userdata('logged_in')){	
+       	 $send['list']=$this->Data->getlist();
+         $send['view']='add';
+         $this->load->view('main',$send);
+    	 }
+        else {
+         	$this->session->set_flashdata('mes','You have to log in first');
+         	redirect('home/admin');
+ 		 
+     	 }
+    }
+        public function addnew(){
+         if($this->session->has_userdata('logged_in')){	
+         	$n=$this->input->post();
+	 		$bol=$this->Data->newrow($n);
+	 		if($bol==TRUE) {
+	 			$this->session->set_flashdata('mes','Data added successfully');
+	 			redirect('home/tonew','refresh');
+	 		}else {
+	 				$this->session->set_flashdata('mes','no');
+	 				redirect('home/tonew','refresh');
+	 		}
+          
+     	 }
+        else {
+         	$this->session->set_flashdata('mes','You have to log in first');
+         	redirect('home/admin');
+ 		 
+     	 }
+       }
         public function admin(){
 
         if($this->session->has_userdata('logged_in')){	
@@ -74,6 +104,7 @@ class Home extends CI_Controller {
  		if($this->session->has_userdata('logged_in')){	
          $send['edit']=$this->Data->getrow($id);
          $tid=$this->Data->whatype($id);
+         $send['id']=$id;
          foreach ($tid as $key ) {}
    
    		 $send['list']=$this->Data->getlist();
@@ -88,7 +119,18 @@ class Home extends CI_Controller {
  		 
      	 }
  		}
-
+ 		public function updating(){
+ 			if($this->session->has_userdata('logged_in')){	
+	 			$n=$this->input->post();
+	 			$this->Data->uprow($n);
+		 		return TRUE;
+	 		}
+	 			else {
+         	$this->session->set_flashdata('mes','You have to log in first');
+         	redirect('home/admin');
+ 		 
+     	 }
+ 		}
  		public function delete($id){
 
  			$conf=$this->Data->delrow($id);

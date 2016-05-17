@@ -12,8 +12,8 @@
      mysqli_select_db($conn,'tech');      
 
      $state = $_POST['get_option'];
-     $find=mysqli_query($conn,"select * from products where type_id='$state'");
-     while($row=mysqli_fetch_array($find))
+     $find=mysqli_query($conn,"select * from products where type_id='$state' order by id desc");
+          while($row=mysqli_fetch_array($find))
      {
        echo $row['name'];
 

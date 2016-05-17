@@ -1,6 +1,4 @@
 
-<script type="text/javascript" src="<?php echo base_url("assets/js/jQuery.js"); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url("assets/css/bootstrap.css"); ?>"></script>
 <script type="text/javascript">
 function fetch_select(val)
 {
@@ -17,7 +15,9 @@ function fetch_select(val)
 }
 
 </script>
-<?php if($this->session->flashdata('mes')) print_r($_SESSION['mes']);?>
+
+<?php if($this->session->flashdata('mes')) echo $_SESSION['mes'];?>
+<a href="<?php echo site_url('home/tonew')?>">Add new data</a>
    <form>
 <select  name="users" onchange="fetch_select(this.value)">
   <option value="">Select A type of food</option>

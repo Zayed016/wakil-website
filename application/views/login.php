@@ -1,8 +1,7 @@
-<?php
 
-echo form_open('home/valid', 'class="email" id="myform"');
-?>
-<?php if($this->session->flashdata('mes')) print_r($_SESSION['mes']);?><br/><br/>
+<?php if($this->session->flashdata('mes')){ echo $_SESSION['mes'];}?><br/><br/>
+
+<?php echo form_open('home/valid'); ?>
 <?php echo form_error('username'); ?>
 <label>Username: </label>
 <input type="text" name="username" value="<?php echo set_value('username'); ?>" />

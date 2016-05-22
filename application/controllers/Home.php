@@ -11,19 +11,47 @@ class Home extends CI_Controller {
 	
 	   public function index()
         {			
-             $lists['list']=$this->Data->getlist();
+            $this->load->library('pagination');
 
-			 $lists['view']='home';
-			 $this->load->view('main',$lists);
+            $config['base_url'] = site_url().'/home/index/';
+            $config['total_rows'] = $this->db->count_all('products');
+            $config['per_page'] = 5;
+            $config['uri_segment']=3;
+
+            
+            $this->pagination->initialize($config);
+
+           $page=($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+           
+           $lists['all']=$this->Data->getproducts($config['per_page'],$page);
+              $lists['view']='home';
+              $this->load->view('main',$lists); 
+            
 			 
         }
-
-        public function catagories($pro){
-        	
-        	$get['pro']=$this->Data->mydata($pro);
-        	$get['view']='second';
-        	$this->load->view('main',$get);
+       
+        public function detail($d){
+            $send['detail']=$this->Data->detaildata($d);
+            $send['view']='details';
+            $this->load->view('main',$send);
         }
+        public function catagories($pro){
+
+        	 $this->load->library('pagination');
+            
+             $config['base_url'] = site_url().'/home/catagories/'.$pro;
+             $config['total_rows'] = $this->Data->countrow($pro);
+             $config['per_page'] = 3; 
+             $config['uri_segment']=4; 
+            $this->pagination->initialize($config);
+
+             $page=($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+                   
+           $send['pro']=$this->Data->mydata($pro,$config['per_page'],$page);
+        	$send['view']='second';
+        	$this->load->view('main',$send);
+        }
+        
        public function tonew(){
        	 if($this->session->has_userdata('logged_in')){	
        	 $send['list']=$this->Data->getlist();
@@ -35,25 +63,46 @@ class Home extends CI_Controller {
          	redirect('home/admin');
  		 
      	 }
-    }
+     }
+    
         public function addnew(){
-         if($this->session->has_userdata('logged_in')){	
-         	$n=$this->input->post();
-	 		$bol=$this->Data->newrow($n);
-	 		if($bol==TRUE) {
-	 			$this->session->set_flashdata('mes','Data added successfully');
-	 			redirect('home/tonew','refresh');
+       if($this->session->has_userdata('logged_in')){	
+         	$config['upload_path']          = './assets/image/';
+                $config['allowed_types']        = 'gif|jpg|png';
+                $config['max_size']             = 100;
+                $config['max_width']            = 1024;
+                $config['max_height']           = 768;
+
+                $this->load->library('upload', $config);
+                echo "<pre>";
+                $n=$this->input->post();
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                  print_r( $this->upload->display_errors());
+                }
+                else
+                {
+                 $data = $this->upload->data();
+                 print_r($data);
+                 $n['image']=$data['file_name'];
+                }
+                
+                 print_r($n);
+	 		 $bol=$this->Data->newrow($n);
+	 		 if($bol==TRUE) {
+	 		$this->session->set_flashdata('mes','Data added successfully');
+	 		   redirect('home/tonew','refresh');
 	 		}else {
-	 				$this->session->set_flashdata('mes','no');
-	 				redirect('home/tonew','refresh');
+	 			$this->session->set_flashdata('mes','no');
+	 			redirect('home/tonew','refresh');
 	 		}
           
-     	 }
-        else {
-         	$this->session->set_flashdata('mes','You have to log in first');
-         	redirect('home/admin');
+      }
+       else {
+        	$this->session->set_flashdata('mes','You have to log in first');
+       	redirect('home/admin');
  		 
-     	 }
+      }
        }
         public function admin(){
 

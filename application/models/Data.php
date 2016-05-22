@@ -9,7 +9,20 @@ class Data extends CI_Model {
              parent::__construct();
         }
 
-      
+       public function getproducts($limit,$start){
+
+        $all=$this->db->query("select * from products limit {$start},{$limit}");
+
+        return $all->result();
+       }
+
+       public function detaildata($d){
+
+        $de=$this->db->query("select * from products where id=$d");
+
+        return $de->result();
+       }
+
         public function getlist(){
 
         	$list=$this->db->query("select * from types");
@@ -17,14 +30,22 @@ class Data extends CI_Model {
         	return $list->result();
         }
 
-        public function mydata($here){
+        public function countrow($c){
 
-        	$get=$this->db->query("select id,name from products where type_id='$here'");
+            $get=$this->db->query("select * from products where type_id={$c}");
 
-        	return $get->result();
+            return $get->num_rows();
+        }
+
+        public function mydata($here,$limit,$start){
+
+        	$get=$this->db->query("select * from products where type_id='$here' limit {$start},{$limit}");
+
+        	return $get;
         }
 
         public function uprow($which){
+
             $type=$which['type'];
             $name=$which['name'];
             $details=$which['details'];
@@ -39,10 +60,11 @@ class Data extends CI_Model {
             $type=$which['type'];
             $name=$which['name'];
             $details=$which['details'];
+            $image=$which['image'];
             
             $one=$this->db->query("select * from products");
             $o=$one->num_rows();
-            $this->db->query("insert into products ( `type_id`, `name`, `details`) VALUES ( '$type', '$name', '$details')");
+            $this->db->query("insert into products ( `type_id`, `name`, `details`, `image`) VALUES ( '$type', '$name', '$details', '$image')");
             $two=$this->db->query("select * from products");
             $t=$two->num_rows();
             if($t>$o) return TRUE;

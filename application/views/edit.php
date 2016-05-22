@@ -5,9 +5,7 @@ foreach ($tid as $value) {
 	$v=$value->id;
 	}
 ?>
-<div  class="container-fluid">
-<div class="row">
-  <div class="container" >
+
   <div  class="col-md-8">
   <form class="form" method="post" action="<?php echo site_url('home/updating')?>">
   

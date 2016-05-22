@@ -1,9 +1,13 @@
 <?php
 
-foreach ($pro as $row)
+foreach ($pro->result() as $row)
 {	
-    echo $row->id;	
 	echo $row->name;
-	echo $row->details;
+      ?>   
+ 
+<img src="<?php echo base_url("assets/image/".$row->image);?>" height="200">
+<a href="<?php echo site_url('home/detail/'.$row->id)?>">Details</a>
+<?php
 }
+echo $this->pagination->create_links();
 ?>

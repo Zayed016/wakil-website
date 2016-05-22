@@ -1,16 +1,16 @@
-<ul>
+
 <?php
 
-foreach ($list as $row)
-{		$id=$row->id;
-
+foreach ($all as $row)
+{		
+	$id=$row->id;
+	echo $row->name;
 	
       ?>  
-<li>        <a href="<?php echo site_url('home/catagories/'.$id);?>"><?=$row->name;?></a> </li>
+      <a href="<?php echo site_url('home/detail/'.$row->id)?>">Details</a> 
         
 <?php   
 }
-?></ul>
-
-<!-- INSERT INTO `types` (`id`, `name`) VALUES (NULL, 'Generator'), (NULL, 'Sub-station'), (NULL, 'Stabilizer'), (NULL, 'IPS/UPS'), (NULL, 'IVS'), (NULL, 'CCTV'), (NULL, 'Solar system'), (NULL, 'LED light'), (NULL, 'Electrical accessories'); -->
+echo $this->pagination->create_links();
+?>
 

@@ -36,7 +36,12 @@ class Data extends CI_Model {
 
             return $get->num_rows();
         }
+        public function newtype($into){
 
+            $in=$this->db->query("insert into types ( `name` ) VALUES ( '$into' )");
+
+            return $in;
+        }
         public function mydata($here,$limit,$start){
 
         	$get=$this->db->query("select * from products where type_id='$here' limit {$start},{$limit}");

@@ -66,8 +66,8 @@ class Home extends CI_Controller {
      }
     
         public function addnew(){
-       if($this->session->has_userdata('logged_in')){	
-         	$config['upload_path']          = './assets/image/';
+         if($this->session->has_userdata('logged_in')){	
+         	    $config['upload_path']          = './assets/image/';
                 $config['allowed_types']        = 'gif|jpg|png';
                 $config['max_size']             = 100;
                 $config['max_width']            = 1024;
@@ -75,7 +75,12 @@ class Home extends CI_Controller {
 
                 $this->load->library('upload', $config);
                 echo "<pre>";
+                $n=NULL;
                 $n=$this->input->post();
+                if($n==NULL){
+                    $this->session->set_flashdata('mes','No data to add');
+               redirect('home/tonew','refresh');
+                }
                 if ( ! $this->upload->do_upload('userfile'))
                 {
                   print_r( $this->upload->display_errors());
@@ -83,27 +88,55 @@ class Home extends CI_Controller {
                 else
                 {
                  $data = $this->upload->data();
-                 print_r($data);
+                 
                  $n['image']=$data['file_name'];
                 }
-                
-                 print_r($n);
-	 		 $bol=$this->Data->newrow($n);
+            $bol=$this->Data->newrow($n);
 	 		 if($bol==TRUE) {
 	 		$this->session->set_flashdata('mes','Data added successfully');
 	 		   redirect('home/tonew','refresh');
 	 		}else {
 	 			$this->session->set_flashdata('mes','no');
 	 			redirect('home/tonew','refresh');
-	 		}
-          
-      }
-       else {
-        	$this->session->set_flashdata('mes','You have to log in first');
-       	redirect('home/admin');
+	 		        }
+            }
+              else {
+        	   $this->session->set_flashdata('mes','You have to log in first');
+         	      redirect('home/admin');
  		 
-      }
+                 }
        }
+       public function addnewtype(){
+        if($this->session->has_userdata('logged_in')){  
+             $n=$this->input->post('name');
+             if($n==NULL){
+                    $this->session->set_flashdata('mes','No data to add');
+               redirect('home/tonew','refresh');
+                }
+             $r=$this->Data->newtype($n);
+             if($r==TRUE){
+                 $this->session->set_flashdata('mes','Data added successfully');
+                 redirect('home/newtype');
+             }
+
+          }
+         else {
+            $this->session->set_flashdata('mes','You have to log in first');
+        redirect('home/admin');
+            }
+       }
+       public function newtype(){
+          if($this->session->has_userdata('logged_in')){  
+
+            $send['view']='new';
+          $this->load->view('main',$send);
+
+          }
+         else {
+            $this->session->set_flashdata('mes','You have to log in first');
+        redirect('home/admin');
+            }
+        }
         public function admin(){
 
         if($this->session->has_userdata('logged_in')){	

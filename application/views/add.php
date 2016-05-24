@@ -18,19 +18,19 @@
  <fieldset class="form-group">
     <label for="name">Name</label>
     <input type="hidden" name="id" value="">
-    <input type="text" name="name" class="form-control input-lg "  placeholder="Enter name of the "/>
+    <input type="text" name="name" class="form-control input-lg " required placeholder="Enter name of the "/>
     
   </fieldset>
  <fieldset class="form-group">
     <label for="details">Details</label>
-    <textarea type="text" name="details" value="" class="form-control input-lg"  placeholder="use , to seperate"/></textarea>
+    <textarea type="text" name="details" value="" class="form-control input-lg" required placeholder="use , to seperate"/></textarea>
     
   </fieldset>
   <fieldset class="form-group">
-<input type="file" name="userfile" class="form-control input-lg" />
+<input type="file" name="userfile" required class="form-control input-lg" />
  </fieldset>
 <br /><br />
 
-<input type="submit" class="btn btn-success " name="mit" value="upload" />
+<input type="submit" class="btn btn-success " name="mit" value="Upload" />
 
 </form>

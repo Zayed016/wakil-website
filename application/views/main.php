@@ -42,6 +42,8 @@ $for=$d->result();
 </ul>
 
 <?php $this->load->view($view);?>
+</div>
+</div>
 
 </body>
 <footer>

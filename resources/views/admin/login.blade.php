@@ -9,7 +9,7 @@
 	<label><p style="color:red"> {{ $errors->first('username')}}</p></label>
 	<fieldset class="form-group">
 	<label for="username"> Username </label>
-	<input type="text" class="form-control" name="username"  value="{{ old('username') }}">
+	<input type="text" class="form-control" name="username" value="{{ old('username') }}">
 	</fieldset>
 	<label><p style="color:red"> {{ $errors->first('password') }}</p></label>
 	<fieldset class="form-group">

@@ -10,16 +10,35 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::get('/',['as'=>'home', 'uses'=>'Mycontroller@home' ]);
 Route::get('login',['as'=>'login', function(){
 	return view('admin.login');
 }]);
-Route::post('into',['as'=>'loging','uses'=>'Mycontroller@login']);
+Route::post('into',['as'=>'logging','uses'=>'Mycontroller@login']);
+Route::get('test',function(){
+$product = App\Type::find(2)->product;
+echo "<pre>";
+
+   print_r($product);
+
+});	
+Route::get('list/{id}',['as'=>'list','uses' => 'Mycontroller@lists']);
+Route::get('details/{id}',['as'=>'details','uses'=>'Mycontroller@details']);
 
 Route::group([ 'middleware' => 'auth'], function() {
- 
-Route::get('dashboard',['as'=>'dashboard', function(){
-	return view('admin.dashboard');
-}]);
 
+	Route::get('logout', ['as' => 'logout', function(){
+	Auth::logout();
+	return view('admin.login');
+	}]);
+	Route::get('dashboard',['as'=>'dashboard', function(){
+		return view('admin.dashboard');
+	}]);
+	Route::get('addproduct',['as'=>'addproduct', 'uses' => 'Mycontroller@addproduct']);
+	Route::post('productadd',['as'=>'productadd', 'uses' => 'Mycontroller@productadd']);
+	Route::get('productlist',['as'=>'productlist','uses' => 'Mycontroller@productlist']);
+	Route::get('getlist/{id}',['as'=>'getlist','uses' => 'Mycontroller@getlist']);
+	Route::get('deleteproduct/{id}',['as'=>'deleteproduct','uses'=>'Mycontroller@deleteproduct']);
+	Route::get('admindetails/{id}',['as'=>'admindetails','uses'=>'Mycontroller@admindetails']);
+	
 });

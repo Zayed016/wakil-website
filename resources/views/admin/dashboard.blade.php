@@ -1,1 +1,3 @@
+@include('admin.adminheader')
+
 Welcome

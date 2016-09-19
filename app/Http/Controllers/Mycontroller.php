@@ -91,4 +91,7 @@ class Mycontroller extends Controller
    	return view('admin.admindetails')->with(compact('just'));
    }
    
+   function edit($id){
+      
+   }
 }

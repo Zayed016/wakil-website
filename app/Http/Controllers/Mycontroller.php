@@ -7,6 +7,7 @@ use App\Product;
 use App\Http\Requests;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\ProductRequest;
+use Mail;
 use Session;
 use DB;
 use Input;
@@ -21,6 +22,7 @@ class Mycontroller extends Controller
    
    function home(){
    	$get=DB::table('types')->get();
+
    	return view('home')->with(compact('get'));
    }
    function lists($id){
@@ -67,9 +69,19 @@ class Mycontroller extends Controller
    	echo $id;
    	$get=DB::table('products')->where('type_id','=',$id)->get();
    	foreach ($get as $get) {
-   		echo $get->name;
-   		echo "<a href='admindetails/$get->id'>Details</a>";
+   		
+   		echo "<a href=".route('list',$get->id).">".$get->name."</a>";
+         
    	}
+    }
+    function justlist(){
+      
+      $get=DB::table('types')->get();
+      foreach ($get as $get) {
+      
+      echo "<a href=".route('list',$get->id)."><li class='ex' style='padding-left:10px;'>".$get->name."</li></a>";
+      
+      }
     }
    function deleteproduct($id){
    	$name=DB::table('products')->where('id','=',$id)->get();
@@ -92,6 +104,33 @@ class Mycontroller extends Controller
    }
    
    function edit($id){
-      
+      $get=DB::table('products')->where('id','=',$id)->get();
+      return view('admin.edit')->with(compact('get'));
+   }
+   function editing(){
+      $all=Input::all();
+      $into=DB::table('products')->where('id', $all['id'])->update(['name' => $all['name'],'details'=>$all['details']]);
+      if($into==true){
+      Session::flash('status', 'Data editing successful');
+      } else {
+      Session::flash('status', 'Something went wrong'); 
+      } 
+      return redirect()->route('admindetails', ['id' =>$all['id'] ]);
+     
+   }
+   function contact(){
+      return view('contact');
+   }
+
+   function complain(){
+      $all=Input::all();
+      $m=array( 'message' => Input::get('message') );
+        Mail::send(['name' => $all['name']],$m,function ($m)use ($all){
+            $m->from($all['email'], $all['name']);
+            print_r($all['email']);
+
+            $m->to('zayedvoices@gmail.com')->subject('com');
+      });
+      echo "string";
    }
 }

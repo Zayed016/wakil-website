@@ -1,8 +1,14 @@
 @include('header')
+
+<div style="position: static;" class="col-md-9">
 @foreach($just as $show)
-<h3>{{$show->name}}
- &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img src="/images/<?=$show->image?>" alt="" style="width:304px;height:228px;">
- </h3> 
+<h3>{{$show->name}} </h3> 
+ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+ <div style="float:right;">
+ 
+ {!! HTML::image('/images/'.$show->image, 'a picture',array('width' => 500 , 'height' => 340)) !!}
+</div>
+
  <br/>
 <ul class="list">
 <?php 
@@ -16,3 +22,4 @@ foreach ($split as $key) {
 ?>
 </ul>
 @endforeach
+</div>

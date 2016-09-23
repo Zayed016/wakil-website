@@ -1,3 +1,4 @@
+@include('admin.adminheader')
   <script>
 function listofproducts(str) {
     if (str == "") {
@@ -21,7 +22,9 @@ function listofproducts(str) {
     }
 }
 </script>
-
+@if(Session::has('status'))
+{{ Session::get('status') }}
+@endif
 <form>
  <b><select class="form-control input-md"  name="users" onchange="listofproducts(this.value)">
  <option value="">Select A type of food</option>

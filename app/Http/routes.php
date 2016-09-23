@@ -11,6 +11,7 @@
 |
 */
 Route::get('/',['as'=>'home', 'uses'=>'Mycontroller@home' ]);
+Route::get('justlist',['as'=>'justlist','uses' => 'Mycontroller@justlist']);
 Route::get('login',['as'=>'login', function(){
 	return view('admin.login');
 }]);
@@ -24,6 +25,9 @@ echo "<pre>";
 });	
 Route::get('list/{id}',['as'=>'list','uses' => 'Mycontroller@lists']);
 Route::get('details/{id}',['as'=>'details','uses'=>'Mycontroller@details']);
+Route::get('about',['as'=>'about', 'uses'=>'Mycontroller@about' ]);
+Route::get('contact',['as'=>'contact', 'uses'=>'Mycontroller@contact' ]);
+Route::post('complain',['as'=>'complain','uses'=>'Mycontroller@complain']);
 
 Route::group([ 'middleware' => 'auth'], function() {
 
@@ -38,6 +42,8 @@ Route::group([ 'middleware' => 'auth'], function() {
 	Route::post('productadd',['as'=>'productadd', 'uses' => 'Mycontroller@productadd']);
 	Route::get('productlist',['as'=>'productlist','uses' => 'Mycontroller@productlist']);
 	Route::get('getlist/{id}',['as'=>'getlist','uses' => 'Mycontroller@getlist']);
+	Route::get('edit/{id}',['as'=>'edit','uses'=>'Mycontroller@edit']);
+	Route::post('editing',['as'=>'editing','uses'=>'Mycontroller@editing']);
 	Route::get('deleteproduct/{id}',['as'=>'deleteproduct','uses'=>'Mycontroller@deleteproduct']);
 	Route::get('admindetails/{id}',['as'=>'admindetails','uses'=>'Mycontroller@admindetails']);
 	

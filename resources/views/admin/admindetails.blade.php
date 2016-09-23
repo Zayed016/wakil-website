@@ -1,4 +1,7 @@
-
+@include('admin.adminheader')
+@if(Session::has('status'))
+{{ Session::get('status') }}
+@endif
 @foreach($just as $show)
 <a href="{{ route('edit',$show->id) }}">Edit</a>
 {{$show->name}}

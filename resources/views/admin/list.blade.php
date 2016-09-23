@@ -1,3 +1,4 @@
+@include('admin.adminheader')
   <script>
 function listofproducts(str) {
     if (str == "") {

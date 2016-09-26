@@ -1,8 +1,13 @@
-<div  style="float:right" class="container-fluid">
-<div class="row">
-  <div class="container" >
-  <div  class="col-md-4">
+@include('header')
 
+ 
+ <div class="col-sm-6">
+ <br/><br/><br/><br/>
+  
+ 
+ <div  style="float: right;">
+<center style="color:green;font-size:200%">Admin login panel</center>
+	 <br/><br/><br/>
 	 {!!  Form::open(array('url' => 'into'));!!}
 	  {!! csrf_field() !!}
 	<label><p style="color:red"> {{$errors->first('need')}}</p></label>
@@ -20,6 +25,4 @@
 	<button type="submit" class="btn btn-primary">Login</button>
 	   {!!  Form::close(); !!}
 </div>
-</div>
-</div>
-</div>
+  </div>

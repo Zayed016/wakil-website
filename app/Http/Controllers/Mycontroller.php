@@ -37,7 +37,22 @@ class Mycontroller extends Controller
 	return Redirect::to('login')->withErrors(array('need' => 'Invalid Username or Password'))->withInput(Input::except('password'));
 	}
 	}
-
+   function search(){
+      $all=Input::all();
+      
+      if($all['look']==NULL){
+         Session::flash('status', 'Please enter something');
+      }else{
+      $f='%'.$all['look'].'%';
+      $get=DB::table('products')->where('name','LIKE',$f)->paginate(1);
+      if($get->isEmpty()){
+         Session::flash('status', 'No such thing exist');
+                   } 
+       return view('result')->with(compact('get'));
+         } 
+       return view('result')->with(compact('get'));
+        
+   }
    function addproduct(){
    	$get=DB::table('types')->get();
    	return view('admin.addproduct')->with(compact('get'));
@@ -66,11 +81,13 @@ class Mycontroller extends Controller
    	return view('admin.productlist')->with(compact('lists'));
    }
    function getlist($id){
-   	echo $id;
+   	//echo $id;
+
    	$get=DB::table('products')->where('type_id','=',$id)->get();
-   	foreach ($get as $get) {
+   	foreach ($get as $gets) {
    		
-   		echo "<a href=".route('list',$get->id).">".$get->name."</a>";
+   		echo "<a href=".route('list',$gets->id).">".$gets->name."</a><br/>";
+         
          
    	}
     }
@@ -82,6 +99,14 @@ class Mycontroller extends Controller
       echo "<a href=".route('list',$get->id)."><li class='ex' style='padding-left:10px;'>".$get->name."</li></a>";
       
       }
+    }
+    function listnojs(){
+      $lists=DB::table('types')->get();
+      $all=input::all();
+       $id=$all['id'];
+       $get=DB::table('products')->where('type_id','=',$id)->paginate(1);
+       return view('admin.productlist')->with(compact('get','lists'));
+
     }
    function deleteproduct($id){
    	$name=DB::table('products')->where('id','=',$id)->get();

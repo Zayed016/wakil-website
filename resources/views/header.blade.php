@@ -68,12 +68,14 @@ li.ex:hover {
       </li>
        	<li><a href="{{ route('about') }}">About Us</a></li>
       	<li><a href="{{ route('contact') }}">Contact Us</a></li>
-     <li> <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+     <li> 
+      {!!  Form::open(array('url' => 'search','method'=>'get','class'=>'navbar-form navbar-left'));!!}
+           <div class="form-group">
+          <input type="text" name='look' class="form-control" placeholder="Search">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
-      </form></li>
+         {!!  Form::close(); !!}
+      </li>
       </ul>
       </div>
       
@@ -91,5 +93,5 @@ li.ex:hover {
 <div class="row">
 <div class="container" >
 <div class="container-fluid">
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{!! HTML::script('js/bootstrap.min.js'); !!}
 

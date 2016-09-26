@@ -13,6 +13,9 @@
 Route::get('/',['as'=>'home', 'uses'=>'Mycontroller@home' ]);
 Route::get('justlist',['as'=>'justlist','uses' => 'Mycontroller@justlist']);
 Route::get('login',['as'=>'login', function(){
+	if (Auth::check()) {
+    return Redirect::to('dashboard');
+    } 
 	return view('admin.login');
 }]);
 Route::post('into',['as'=>'logging','uses'=>'Mycontroller@login']);
@@ -23,6 +26,8 @@ echo "<pre>";
    print_r($product);
 
 });	
+Route::get('listnojs',['as'=>'listnojs','uses'=>'Mycontroller@listnojs']);
+Route::get('search',['as'=>'search','uses'=>'Mycontroller@search']);
 Route::get('list/{id}',['as'=>'list','uses' => 'Mycontroller@lists']);
 Route::get('details/{id}',['as'=>'details','uses'=>'Mycontroller@details']);
 Route::get('about',['as'=>'about', 'uses'=>'Mycontroller@about' ]);

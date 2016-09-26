@@ -22,6 +22,8 @@ function listofproducts(str) {
     }
 }
 </script>
+<div class="col-md-8">
+  
 
 <form>
  <b><select class="form-control input-md"  name="users" onchange="listofproducts(this.value)">
@@ -31,5 +33,5 @@ function listofproducts(str) {
   @endforeach
    </select></b>
 </form>
-
+</div>
 <div id="txtHint"><b>Food will be listed here...</b></div>

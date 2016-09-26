@@ -4,7 +4,7 @@
 @foreach($just as $show)
 <h3>{{$show->name}} </h3> 
  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
- <div style="float:right;">
+ <div >
  
  {!! HTML::image('/images/'.$show->image, 'a picture',array('width' => 500 , 'height' => 340)) !!}
 </div>

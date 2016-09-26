@@ -1,37 +1,34 @@
 @include('admin.adminheader')
-  <script>
-function listofproducts(str) {
-    if (str == "") {
-        document.getElementById("txtHint").innerHTML = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-            }
-        };
-        xmlhttp.open("GET","getlist/"+str);
-        xmlhttp.send();
-    }
-}
-</script>
+ 
+<br/>
 @if(Session::has('status'))
 {{ Session::get('status') }}
 @endif
-<form>
- <b><select class="form-control input-md"  name="users" onchange="listofproducts(this.value)">
+
+{!!  Form::open(array('url' => 'listnojs','method'=>'get','class'=>"form-horizontal"));!!}
+
+ <b><select class="form-control input-md"  name="id" >
  <option value="">Select A type of food</option>
   @foreach ($lists as $list)
   <option value="{{$list->id}}">{{$list->name}}</option>
   @endforeach
    </select></b>
-</form>
+    <button type="submit" class="btn btn-primary">Get</button>
+   {!!  Form::close(); !!}
 
-<div id="txtHint"><b>Products will be listed here...</b></div>
+@if( ! empty($get))
+<div  class="col-md-6">
+<ul class="list-unstyled">
+@foreach($get as $show)
+<li><h3><a href="{{ route('details',$show->id) }}">{{$show->name}}</a></h3></li>
+@endforeach
+</ul>
+<br/><br/><br/><br/><br/><br/><br/>
+<div style="float:right;">
+
+{{ $get->appends(['id' => Input::get('id')])->render() }}
+</div>
+</div>
+@endif
+
+

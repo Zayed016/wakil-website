@@ -1,13 +1,19 @@
 @include('header')
 
- 
- <div class="col-sm-6">
+<div class="container">
+  <div class="row">
+  <div class="col-md-4 col-md-offset-2">
+  	
+
+ <div>
+
  <br/><br/><br/><br/>
   
  
- <div  style="float: right;">
-<center style="color:green;font-size:200%">Admin login panel</center>
-	 <br/><br/><br/>
+ <div class="panel panel-default" >
+<center  class="panel-heading" style="color:green;font-size:200%">Admin login panel</center>
+<div class="panel-body">
+
 	 {!!  Form::open(array('url' => 'into'));!!}
 	  {!! csrf_field() !!}
 	<label><p style="color:red"> {{$errors->first('need')}}</p></label>
@@ -24,5 +30,10 @@
 	</fieldset>
 	<button type="submit" class="btn btn-primary">Login</button>
 	   {!!  Form::close(); !!}
+	   </div>
 </div>
   </div>
+    </div>
+
+</div>
+</div>

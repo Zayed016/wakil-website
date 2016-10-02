@@ -34,6 +34,7 @@ Route::get('about',['as'=>'about', 'uses'=>'Mycontroller@about' ]);
 Route::get('contact',['as'=>'contact', 'uses'=>'Mycontroller@contact' ]);
 Route::post('complain',['as'=>'complain','uses'=>'Mycontroller@complain']);
 
+
 Route::group([ 'middleware' => 'auth'], function() {
 
 	Route::get('logout', ['as' => 'logout', function(){
@@ -51,5 +52,7 @@ Route::group([ 'middleware' => 'auth'], function() {
 	Route::post('editing',['as'=>'editing','uses'=>'Mycontroller@editing']);
 	Route::get('deleteproduct/{id}',['as'=>'deleteproduct','uses'=>'Mycontroller@deleteproduct']);
 	Route::get('admindetails/{id}',['as'=>'admindetails','uses'=>'Mycontroller@admindetails']);
+	Route::get('showfeedback',['as'=>'showfeedback','uses'=>'Mycontroller@showfeedback']);
+	Route::get('feedback/{id}',['as'=>'feedback','uses'=>'Mycontroller@feedback']);
 	
 });

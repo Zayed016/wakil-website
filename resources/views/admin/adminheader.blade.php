@@ -21,6 +21,6 @@
 
 	<li><a href="{{ route('addproduct') }}">Add new Product</a></li>
  	<li><a href="{{ route('productlist') }}">List of product</a></li>
-
+	<li><a href="{{ route('showfeedback') }}">Feedbacks</a></li>
 	    
 	</ul>

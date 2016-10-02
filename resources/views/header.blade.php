@@ -93,5 +93,8 @@ li.ex:hover {
 <div class="row">
 <div class="container" >
 <div class="container-fluid">
+<div class="col-md-offset-1">
+ <div class="col-md-10"> 
+
 {!! HTML::script('js/bootstrap.min.js'); !!}
 

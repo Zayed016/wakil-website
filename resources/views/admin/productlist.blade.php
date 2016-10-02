@@ -20,7 +20,7 @@
 <div  class="col-md-6">
 <ul class="list-unstyled">
 @foreach($get as $show)
-<li><h3><a href="{{ route('details',$show->id) }}">{{$show->name}}</a></h3></li>
+<li><h3><a href="{{ route('details',$show->id) }}">{{$show->name}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" href="{{ route('deleteproduct',$show->id)}}">Delete</a></h3></li>
 @endforeach
 </ul>
 <br/><br/><br/><br/><br/><br/><br/>

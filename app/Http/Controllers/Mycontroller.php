@@ -100,6 +100,7 @@ class Mycontroller extends Controller
       
       }
     }
+    
     function listnojs(){
       $lists=DB::table('types')->get();
       $all=input::all();
@@ -149,13 +150,24 @@ class Mycontroller extends Controller
 
    function complain(){
       $all=Input::all();
-      $m=array( 'message' => Input::get('message') );
-        Mail::send(['name' => $all['name']],$m,function ($m)use ($all){
-            $m->from($all['email'], $all['name']);
-            print_r($all['email']);
+      $into=DB::table('feedback')->insert(['name' => $all['name'] ,'email'=>$all['email'],'phone'=>$all['phone'],'message'=>$all['message']]);
+   
+      if($into==true){
+      Session::flash('status', 'Thank you for your time we will get back to you as soon as possible');
+      } else {
+      Session::flash('status', 'Something went wrong'); 
+      } 
+      return redirect()->route('contact');
+     
+   }
 
-            $m->to('zayedvoices@gmail.com')->subject('com');
-      });
-      echo "string";
+   function showfeedback(){
+      $get=DB::table('feedback')->orderby('f_time','desc')->paginate(1);
+      return view('admin.showfeedback')->with(compact('get'));
+   }
+
+   function feedback($id){
+      $get=DB::table('feedback')->where('id','=',$id)->get();
+      return view('admin.feedback')->with(compact('get'));
    }
 }
